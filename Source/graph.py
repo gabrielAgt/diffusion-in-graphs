@@ -70,7 +70,7 @@ class Graph():
 		for x in range(self.__size):
 			for y in range(self.__size):
 				for z in range(self.__size):
-					if tr[x][y] == 1 && tr[y][z] == 1:
+					if tr[x][y] == 1 and tr[y][z] == 1:
 						tr[x][z] = 1
 		return tr
 
