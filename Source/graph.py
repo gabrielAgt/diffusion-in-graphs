@@ -56,7 +56,7 @@ class Graph():
 				lin += self.__graph[x][i]
 
 			if col == 0 and lin > 0:
-				src.append({ 'node': x, 'degree': lin })
+				src.append({ 'node': x, 'degree': lin, 'we_achieved': [], 'we_achieved_len': 0 })
 
 		return src
 
@@ -65,12 +65,12 @@ class Graph():
 
 		O calculo da transitividade está sendo calculado com base no algoritmo de Warshall
 	"""
-	def calctransitivity(self):
+	def transitivity(self):
 		tr = self.__graph.copy()
 		for x in range(self.__size):
 			for y in range(self.__size):
 				for z in range(self.__size):
-					if tr[x][y] == 1 and tr[y][z] == 1:
+					if tr[x][y] and tr[y][z]:
 						tr[x][z] = 1
 		return tr
 
