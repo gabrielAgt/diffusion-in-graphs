@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import random
 import graph as g
 import args
 
@@ -22,6 +23,9 @@ def getsrcwithwe_achieved(graph):
 
 def unionlen(we1, we2):
 	return  len(list(set(we1 + we2)))
+
+def get_number_random(n):
+	return random.randint(0, n)
 
 def random_solution(graph, n_porce):
 	pass
@@ -60,15 +64,22 @@ def greedy_solution(graph, n_porce):
 def main():
 	arguments = args.get()
 
+	# Sementa para geração de números aleatórios
+	random.seed(arguments.seed)
+
+	# Instância do dígrafo
 	graph = g.Graph()
-	graph.load(arguments.input)
+	graph.load(arguments.input) # Carregamento do arquivo para o formato de matriz binária
 
+	# Número de nós que deverá ser atingido
 	n_porce = int((graph.getsize() * arguments.percentage) / 100)
-
-	if (arguments.method.lower() == 'g'): 
+	
+	if (arguments.method.lower() == 'g'):
 		greedy_solution(graph, n_porce)
-	else:
+	elif(arguments.method.lower() == 'a':
 		random_solution(graph, n_porce)
+	else:
+		print("Error: Método de solução inválida\n")
 
 if __name__ == '__main__':
 	main()
