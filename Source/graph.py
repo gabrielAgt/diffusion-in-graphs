@@ -19,6 +19,7 @@ class Graph():
 			filename (str): Caminho do digrafo.
 	"""
 	def load(self, filename):
+		file = None;
 		try:
 			file = open(filename, 'r')
 		except Exception as e:
