@@ -36,20 +36,24 @@ def greedy_solution(graph, n_porce):
 	# Lista de todos os nós fontes já ordenado em ordem decrescente
 	wesrc = sorted(getsrcwithwe_achieved(graph), key=getwe_achievedlen, reverse=True)
 
+	# listweSolution => Guarda todos os nós que serão util
+	# listwe         => Lista de todos os nós que são atingido
 	listweSolution, listwe = [], []
 
+	# Nó com maior percentual de alcance
 	listwe = listwe + wesrc[0]['we_achieved']
 	listweSolution.append(wesrc[0])
 
+	# Verificação para saber se ele já cobre a quantidade necessaria
 	if wesrc[0]['we_achieved_len'] >= n_porce:
 		print(f'Melhor resultado encontrado\n {listweSolution}')
 	else:
-		for we in wesrc[1::]:
-			l = unionlen(listwe, we['we_achieved']) 
-			if l > len(listwe):
+		for we in wesrc[1::]: # Percorre todo o conjunto de nós fontes pulando o primeiro indice
+			count = unionlen(listwe, we['we_achieved']) # Tamanho da união do conjunto de nós atingido com os atigindos pelo nó src
+			if count > len(listwe): # Verifica se os nós já foram atingido
 				listwe = listwe + we['we_achieved']
 				listweSolution.append(we)
-				if l >= n_porce:
+				if count >= n_porce: # Verifica se já alcançou a meta
 					break
 		print(f'Melhor resultado encontrado\n {listweSolution}')
 
