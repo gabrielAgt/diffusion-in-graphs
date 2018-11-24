@@ -29,7 +29,7 @@ def get_number_random(n):
 
 def random_solution(graph, n_porce):
 	pass
-
+	
 def greedy_solution(graph, n_porce):
 	"""
 		Retorna o tamanho do conjunto de nós alcançado
@@ -74,9 +74,9 @@ def main():
 	# Número de nós que deverá ser atingido
 	n_porce = int((graph.getsize() * arguments.percentage) / 100)
 	
-	if (arguments.method.lower() == 'g'):
+	if arguments.method.lower() == 'g':
 		greedy_solution(graph, n_porce)
-	elif(arguments.method.lower() == 'a':
+	elif arguments.method.lower() == 'a':
 		random_solution(graph, n_porce)
 	else:
 		print("Error: Método de solução inválida\n")
