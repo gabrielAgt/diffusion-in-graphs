@@ -28,8 +28,21 @@ def get_number_random(n):
 	return random.randint(0, n)
 
 def random_solution(graph, n_porce):
-	pass
-	
+	wesrc = getsrcwithwe_achieved(graph)
+	we_len = len(wesrc)
+
+	# listweSolution => Guarda todos os nós fontes que serão util
+	# count          => Quantidade de nós ja atigindos
+	listweSolution, count = [], 0
+
+	# Enquanto a quantidade de nós não for atingida ele ira sortear outros nós fontes
+	while count < n_porce:
+		we = wesrc[get_number_random(we_len) - 1] # Sortear outro no fonte
+		count += we['we_achieved_len']
+		listweSolution.append(we)
+
+	print(f'Melhor resultado encontrado\n {listweSolution}')
+
 def greedy_solution(graph, n_porce):
 	"""
 		Retorna o tamanho do conjunto de nós alcançado
@@ -40,7 +53,7 @@ def greedy_solution(graph, n_porce):
 	# Lista de todos os nós fontes já ordenado em ordem decrescente
 	wesrc = sorted(getsrcwithwe_achieved(graph), key=getwe_achievedlen, reverse=True)
 
-	# listweSolution => Guarda todos os nós que serão util
+	# listweSolution => Guarda todos os nós fontes que serão util
 	# listwe         => Lista de todos os nós que são atingido
 	listweSolution, listwe = [], []
 
