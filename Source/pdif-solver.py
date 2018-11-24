@@ -29,6 +29,7 @@ def get_number_random(n):
 	return random.randint(0, n)
 
 def random_solution(graph, n_porce):
+<<<<<<< HEAD
 	wesrc = getsrcwithwe_achieved(graph)
 	we_len = len(wesrc)
 
@@ -44,6 +45,10 @@ def random_solution(graph, n_porce):
 
 	return listweSolution
 
+=======
+	pass
+	
+>>>>>>> parent of b643eb2... Procedimento aleatório e reestruturação do projeto
 def greedy_solution(graph, n_porce):
 	"""
 		Retorna o tamanho do conjunto de nós alcançado
@@ -54,7 +59,7 @@ def greedy_solution(graph, n_porce):
 	# Lista de todos os nós fontes já ordenado em ordem decrescente
 	wesrc = sorted(getsrcwithwe_achieved(graph), key=getwe_achievedlen, reverse=True)
 
-	# listweSolution => Guarda todos os nós fontes que serão util
+	# listweSolution => Guarda todos os nós que serão util
 	# listwe         => Lista de todos os nós que são atingido
 	listweSolution, listwe = [], []
 
