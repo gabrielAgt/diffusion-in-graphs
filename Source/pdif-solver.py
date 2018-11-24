@@ -3,6 +3,7 @@
 
 import random
 import graph as g
+import output
 import args
 
 # Retorna os nós fontes, os nós que são alcançado por ele
@@ -41,7 +42,7 @@ def random_solution(graph, n_porce):
 		count += we['we_achieved_len']
 		listweSolution.append(we)
 
-	print(f'Melhor resultado encontrado\n {listweSolution}')
+	return listweSolution
 
 def greedy_solution(graph, n_porce):
 	"""
@@ -63,7 +64,7 @@ def greedy_solution(graph, n_porce):
 
 	# Verificação para saber se ele já cobre a quantidade necessaria
 	if wesrc[0]['we_achieved_len'] >= n_porce:
-		print(f'Melhor resultado encontrado\n {listweSolution}')
+		return listweSolution
 	else:
 		for we in wesrc[1::]: # Percorre todo o conjunto de nós fontes pulando o primeiro indice
 			count = unionlen(listwe, we['we_achieved']) # Tamanho da união do conjunto de nós atingido com os atigindos pelo nó src
@@ -72,7 +73,7 @@ def greedy_solution(graph, n_porce):
 				listweSolution.append(we)
 				if count >= n_porce: # Verifica se já alcançou a meta
 					break
-		print(f'Melhor resultado encontrado\n {listweSolution}')
+		return listweSolution
 
 def main():
 	arguments = args.get()
@@ -86,13 +87,19 @@ def main():
 
 	# Número de nós que deverá ser atingido
 	n_porce = int((graph.getsize() * arguments.percentage) / 100)
-	
+
+
+	solution = None
 	if arguments.method.lower() == 'g':
-		greedy_solution(graph, n_porce)
+		solution = greedy_solution(graph, n_porce)
 	elif arguments.method.lower() == 'a':
-		random_solution(graph, n_porce)
+		solution = random_solution(graph, n_porce)
 	else:
 		print("Error: Método de solução inválida\n")
+
+	if solution:
+		output.create_file_dot(graph, f'Dot/{arguments.output}')
+		output.create_file_log(graph, solution, f'{arguments.output}', arguments)
 
 if __name__ == '__main__':
 	main()

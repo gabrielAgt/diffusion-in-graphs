@@ -94,6 +94,12 @@ class Graph():
 		return self.__size
 
 	"""
+		Retorna a quantidade de arcos
+	"""
+	def getarcs(self):
+		return self.__edge
+
+	"""
 		Cria a matriz do dígrafo 
 	"""
 	def __create(self):
