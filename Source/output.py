@@ -1,5 +1,3 @@
-import os.path
-
 def create_file_dot(graph, path):
 	def get_we_numbersrc():
 		wesrc = graph.wesrc()
@@ -28,7 +26,7 @@ def create_file_dot(graph, path):
 	file.close() 
 
 def create_file_log(graph, solution, path, arguments):
-	file = open(f'Logs/{path}.log', 'a+')
+	file = open(f'{path}.log', 'a+')
 	file.writelines(f'{arguments.input} {graph.getsize()} {graph.getarcs()} {arguments.seed} {arguments.method} {len(solution)}\n')
 	file.close()
 

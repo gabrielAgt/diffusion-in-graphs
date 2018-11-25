@@ -29,7 +29,6 @@ def get_number_random(n):
 	return random.randint(0, n)
 
 def random_solution(graph, n_porce):
-<<<<<<< HEAD
 	wesrc = getsrcwithwe_achieved(graph)
 	we_len = len(wesrc)
 
@@ -45,10 +44,6 @@ def random_solution(graph, n_porce):
 
 	return listweSolution
 
-=======
-	pass
-	
->>>>>>> parent of b643eb2... Procedimento aleatório e reestruturação do projeto
 def greedy_solution(graph, n_porce):
 	"""
 		Retorna o tamanho do conjunto de nós alcançado
@@ -93,7 +88,6 @@ def main():
 	# Número de nós que deverá ser atingido
 	n_porce = int((graph.getsize() * arguments.percentage) / 100)
 
-
 	solution = None
 	if arguments.method.lower() == 'g':
 		solution = greedy_solution(graph, n_porce)
@@ -104,7 +98,7 @@ def main():
 
 	if solution:
 		output.create_file_dot(graph, f'Dot/{arguments.output}')
-		output.create_file_log(graph, solution, f'{arguments.output}', arguments)
+		output.create_file_log(graph, solution, f'Logs/{arguments.output}', arguments)
 
 if __name__ == '__main__':
 	main()
