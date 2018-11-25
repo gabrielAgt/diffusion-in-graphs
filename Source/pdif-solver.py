@@ -6,7 +6,7 @@ import graph as g
 import output
 import args
 
-# Retorna os nós fontes, os nós que são alcançado por ele
+# Retorna os nós fontes e os nós que são alcançado por ele
 def getsrcwithwe_achieved(graph):
 	size = graph.getsize() # Tamanho do dígrafo
 	wesrc = graph.wesrc() # Nós fontes

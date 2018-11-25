@@ -45,7 +45,12 @@ class Graph():
 		mas nenhum se relaciona com ele.
 
 		Conjunto de retorno:
-			Ex: [{ 'node': <número do nó>, 'degree': <seu grau> }]
+			Ex: [{ 
+				'node': <número do nó>, 
+				'degree': <seu grau>, 
+				'we_achieved': <nós alcançados pela transitividade>, 
+				'we_achieved_len': <quantidade de nós alcançado> 
+			}]
 	"""
 	def wesrc(self):
 		src = []
@@ -56,7 +61,7 @@ class Graph():
 				col += self.__graph[i][x] # Para ser um nó fonte esta variavel 'col' deve ser igual a 0, pois nenhum nó se relaciona com ela
 				lin += self.__graph[x][i]
 
-			if col == 0 and lin > 0:
+ 			if col == 0 and lin > 0:
 				src.append({ 'node': x, 'degree': lin, 'we_achieved': [], 'we_achieved_len': 0 })
 
 		return src
