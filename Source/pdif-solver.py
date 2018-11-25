@@ -25,9 +25,6 @@ def getsrcwithwe_achieved(graph):
 def unionlen(we1, we2):
 	return  len(list(set(we1 + we2)))
 
-def get_number_random(n):
-	return random.randint(0, n)
-
 def random_solution(graph, n_porce):
 	wesrc = getsrcwithwe_achieved(graph)
 	we_len = len(wesrc)
@@ -38,7 +35,7 @@ def random_solution(graph, n_porce):
 
 	# Enquanto a quantidade de nós não for atingida ele ira sortear outros nós fontes
 	while count < n_porce:
-		we = wesrc[get_number_random(we_len) - 1] # Sortear outro no fonte
+		we = random.choice(wesrc) # Sortear outro no fonte
 		count += we['we_achieved_len']
 		listweSolution.append(we)
 
