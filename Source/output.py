@@ -9,14 +9,14 @@ def create_file_dot(graph, path):
 
 	header, body = '', ''
 	for x in range(len_g):
-		header += str(x + 1)
+		header += '	' + str(x + 1)
 		if x in wesrc:
 			header += ' [fillcolor=yellow, style=filled]'
 		header += ';\n'
 
 		for y in range(len_g):
 			if tra[x][y]:
-				body += f'{x + 1} -> {y + 1};\n'
+				body += f'	{x + 1} -> {y + 1};\n'
 
 
 	content = 'digraph {\n' + header + body + '}'

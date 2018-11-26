@@ -42,14 +42,9 @@ def random_solution(graph, n_porce):
 	return listweSolution
 
 def greedy_solution(graph, n_porce):
-	"""
-		Retorna o tamanho do conjunto de nós alcançado
-	"""
-	def getwe_achievedlen(we): 
-		return we['we_achieved_len']
 
 	# Lista de todos os nós fontes já ordenado em ordem decrescente
-	wesrc = sorted(getsrcwithwe_achieved(graph), key=getwe_achievedlen, reverse=True)
+	wesrc = sorted(getsrcwithwe_achieved(graph), key=lambda we: we['we_achieved_len'], reverse=True)
 
 	# listweSolution => Guarda todos os nós que serão util
 	# listwe         => Lista de todos os nós que são atingido
@@ -96,6 +91,8 @@ def main():
 	if solution:
 		output.create_file_dot(graph, f'Dot/{arguments.output}')
 		output.create_file_log(graph, solution, f'Logs/{arguments.output}', arguments)
+
+	print(f'\nMelhor solução \n\n{solution}')
 
 if __name__ == '__main__':
 	main()

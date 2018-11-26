@@ -57,11 +57,12 @@ class Graph():
 		for x in range(self.__size):
 			lin, col = 0, 0
 			
+			# Para ser um nó fonte esta variavel 'col' deve ser igual a 0, pois nenhum nó se relaciona com ela
 			for i in range(self.__size):
-				col += self.__graph[i][x] # Para ser um nó fonte esta variavel 'col' deve ser igual a 0, pois nenhum nó se relaciona com ela
+				col += self.__graph[i][x]
 				lin += self.__graph[x][i]
 
- 			if col == 0 and lin > 0:
+			if col == 0 and lin > 0:
 				src.append({ 'node': x, 'degree': lin, 'we_achieved': [], 'we_achieved_len': 0 })
 
 		return src
