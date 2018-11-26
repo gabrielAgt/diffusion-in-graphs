@@ -1,4 +1,6 @@
-def create_file_dot(graph, path):
+import base64
+
+def create_file_dot(graph, path, filename):
 	def get_we_numbersrc():
 		wesrc = graph.wesrc()
 		return [number['node'] for number in wesrc]
@@ -18,10 +20,8 @@ def create_file_dot(graph, path):
 			if tra[x][y]:
 				body += f'	{x + 1} -> {y + 1};\n'
 
-
-	content = 'digraph {\n' + header + body + '}'
-
-	file = open(f'{path}.dot', 'w') 
+	content = f'# Dígrafo: {filename}\n' +'digraph {\n' + header + body + '}'
+	file = open(f'{path}{base64.b64encode(filename.encode())}.dot', 'w')
 	file.write(content)
 	file.close() 
 

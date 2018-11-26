@@ -80,19 +80,22 @@ def main():
 	# Número de nós que deverá ser atingido
 	n_porce = int((graph.getsize() * arguments.percentage) / 100)
 
-	solution = None
+	solutions = None
 	if arguments.method.lower() == 'g':
-		solution = greedy_solution(graph, n_porce)
+		solutions = greedy_solution(graph, n_porce)
 	elif arguments.method.lower() == 'a':
-		solution = random_solution(graph, n_porce)
+		solutions = random_solution(graph, n_porce)
 	else:
-		print("Error: Método de solução inválida\n")
+		print("\nError: Método de solução inválida\n")
 
-	if solution:
-		output.create_file_dot(graph, f'Dot/{arguments.output}')
-		output.create_file_log(graph, solution, f'Logs/{arguments.output}', arguments)
+	if solutions:
+		output.create_file_dot(graph, 'Dot/', arguments.input)
+		output.create_file_log(graph, solutions, f'Logs/{arguments.output}', arguments)
 
-	print(f'\nMelhor solução \n\n{solution}')
+	print('\nSolução\nNós fontes que deveram ser utilizado: ')
+	for solution in solutions:
+		print(f'{solution["node"] + 1} ', end=' ')
+	print('\n')
 
 if __name__ == '__main__':
 	main()
