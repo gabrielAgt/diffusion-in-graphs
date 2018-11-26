@@ -1,4 +1,4 @@
-import base64
+from base64 import b64encode
 
 def create_file_dot(graph, path, filename):
 	def get_we_numbersrc():
@@ -21,7 +21,7 @@ def create_file_dot(graph, path, filename):
 				body += f'	{x + 1} -> {y + 1};\n'
 
 	content = f'# Dígrafo: {filename}\n' +'digraph {\n' + header + body + '}'
-	file = open(f'{path}{base64.b64encode(filename.encode())}.dot', 'w')
+	file = open(f'{path}{b64encode(filename.encode())}.dot', 'w')
 	file.write(content)
 	file.close() 
 
