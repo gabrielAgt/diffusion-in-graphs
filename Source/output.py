@@ -18,14 +18,14 @@ def create_file_dot(graph, solutions, path, filename):
 			header += ' [fillcolor=yellow, style=filled]'
 		elif x in wesrc['teste2']:
 			header += ' [color=red]'
-		header += ';\n'
+		header += '\n'
 
 		for y in range(len_g):
 			if graph.getedge(x, y):
 				body += f'	{x + 1} -> {y + 1}'
 				if y in wesrc['teste2'] and (x in wesrc['teste2'] or x in wesrc['teste1']):
 					body += ' [color=red]'
-				body += ';\n'
+				body += '\n'
 
 	content = f'# Dígrafo: {filename}\n' +'digraph {\n' + header + body + '}'
 	file = open(f'{path}{b64encode(filename.encode())}.dot', 'w')
