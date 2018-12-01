@@ -34,7 +34,7 @@ class Graph():
 			elif line[0] == 'p': # Linha que indica o tamanho do dígrafo é o número de relacionamentos
 				self.__size = int(line[2])
 				self.__edge = int(line[3])
-				self.__create()
+				self.__graph = self.__create()
 			elif line[0] == 'e': # Nós que se relaciona
 				self.addedge(int(line[1]) - 1, int(line[2]) - 1)
 
@@ -73,7 +73,7 @@ class Graph():
 		O calculo da transitividade está sendo calculado com base no algoritmo de Warshall
 	"""
 	def transitivity(self):
-		tr = self.__graph.copy()
+		tr = list(self.__graph)
 		for x in range(self.__size):
 			for y in range(self.__size):
 				for z in range(self.__size):
@@ -105,11 +105,17 @@ class Graph():
 	def getarcs(self):
 		return self.__edge
 
+	def getGraph(self):
+		graph = self.__create()
+		for x in range(self.__size):
+			for y in range(self.__size):
+				graph[x][y] = self.__graph[x][y]
+		return graph
 	"""
 		Cria a matriz do dígrafo 
 	"""
 	def __create(self):
-		self.__graph = [[0 for x in range(self.__size)] for y in range(self.__size)]
+		return [[0 for x in range(self.__size)] for y in range(self.__size)]
 
 	"""
 		Quando for dado um "print" no objeto, mostra a matriz binária

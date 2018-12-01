@@ -2,14 +2,26 @@
 # -*- coding: utf-8 -*-
 
 import random
-import graph as g
-import output
+from graph import *
 import args
+import output
 
 # Retorna os nós fontes e os nós que são alcançado por ele
-def getsrcwithwe_achieved(graph, transitivity):
-	size = graph.getsize() # Tamanho do dígrafo
-	wesrc = graph.wesrc() # Nós fontes
+def getsrcwithwe_achieved(graph):
+	def transitivity_calc(graph, size):
+		for x in range(size):
+			for y in range(size):
+				for z in range(size):
+					if graph[x][y] and graph[y][z]:
+						graph[x][z] = 1
+		return graph
+
+	# Tamanho do dígrafo
+	size = graph.getsize()
+	# Nós fontes
+	wesrc = graph.wesrc()
+	# Transitividade do dígrafo
+	transitivity = transitivity_calc(graph.getGraph(), graph.getsize())
 
 	x = 0 # Posição do nó
 	for we in wesrc: # Percorre todos os nós fontes
@@ -21,11 +33,8 @@ def getsrcwithwe_achieved(graph, transitivity):
 
 	return wesrc
 
-def unionlen(we1, we2):
-	return  len(list(set(we1 + we2)))
-
-def random_solution(graph, transitivity, n_porce):
-	wesrc = getsrcwithwe_achieved(graph, transitivity)
+def random_solution(graph, n_porce):
+	wesrc = getsrcwithwe_achieved(graph)
 	we_len = len(wesrc)
 
 	# listweSolution => Guarda todos os nós fontes que serão util
@@ -40,10 +49,12 @@ def random_solution(graph, transitivity, n_porce):
 
 	return listweSolution
 
-def greedy_solution(graph, transitivity, n_porce):
+def greedy_solution(graph, n_porce):
+	def unionlen(we1, we2):
+		return len(list(set(we1 + we2)))
 
 	# Lista de todos os nós fontes já ordenado em ordem decrescente
-	wesrc = sorted(getsrcwithwe_achieved(graph, transitivity), key=lambda we: we['we_achieved_len'], reverse=True)
+	wesrc = sorted(getsrcwithwe_achieved(graph), key=lambda we: we['we_achieved_len'], reverse=True)
 
 	# listweSolution => Guarda todos os nós que serão util
 	# listwe         => Lista de todos os nós que são atingido
@@ -73,25 +84,22 @@ def main():
 	random.seed(arguments.seed)
 
 	# Instância do dígrafo
-	graph = g.Graph()
+	graph = Graph()
 	graph.load(arguments.input) # Carregamento do arquivo para o formato de matriz binária
 
 	# Número de nós que deverá ser atingido
 	n_porce = int((graph.getsize() * arguments.percentage) / 100)
 
-	# Transitividade do dígrafo
-	transitivity = graph.transitivity()
-
 	solutions = None
 	if arguments.method.lower() == 'g':
-		solutions = greedy_solution(graph, transitivity, n_porce)
+		solutions = greedy_solution(graph, n_porce)
 	elif arguments.method.lower() == 'a':
-		solutions = random_solution(graph, transitivity, n_porce)
+		solutions = random_solution(graph, n_porce)
 	else:
 		print("\nError: Método de solução inválida\n")
 
 	if solutions:
-		output.create_file_dot(graph, transitivity, 'Logs/', arguments.input)
+		output.create_file_dot(graph, solutions, 'Logs/', arguments.input)
 		output.create_file_log(graph, solutions, f'Logs/{arguments.output}', arguments)
 
 	print('\nSolução\nNós fontes que deveram ser utilizado: ')
