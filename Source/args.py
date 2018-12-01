@@ -5,10 +5,10 @@ def get():
 
 	parser.add_argument('seed', 
 		help='Valor inteiro de semente informada pelo usuário que será usada para inicializar o gerador de números aleatórios', type=int)
-	parser.add_argument('method', 
-		help='Letra que indica qual método utilizar: \'g\' para algoritmo guloso, \'a\' para método aleatório')
 	parser.add_argument('percentage', 
 		help='Percentual de nós que deseja atingir', type=int)
+	parser.add_argument('method', 
+		help='Letra que indica qual método utilizar: \'g\' para algoritmo guloso, \'a\' para método aleatório')
 	parser.add_argument('input',
 		help='Nome do arquivo de que contem a descrição de um grafo no formato ASCII DIMACS')
 	parser.add_argument('output', 

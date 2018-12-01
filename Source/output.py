@@ -1,12 +1,12 @@
 from base64 import b64encode
 
-def create_file_dot(graph, path, filename):
+# Saida de arquivo .dot
+def create_file_dot(graph, transitivity, path, filename):
 	def get_we_numbersrc():
 		wesrc = graph.wesrc()
 		return [number['node'] for number in wesrc]
 
 	wesrc = get_we_numbersrc()
-	tra = graph.transitivity()
 	len_g = graph.getsize()
 
 	header, body = '', ''
@@ -17,7 +17,7 @@ def create_file_dot(graph, path, filename):
 		header += ';\n'
 
 		for y in range(len_g):
-			if tra[x][y]:
+			if transitivity[x][y]:
 				body += f'	{x + 1} -> {y + 1};\n'
 
 	content = f'# Dígrafo: {filename}\n' +'digraph {\n' + header + body + '}'
@@ -25,9 +25,8 @@ def create_file_dot(graph, path, filename):
 	file.write(content)
 	file.close() 
 
+# Saida de log
 def create_file_log(graph, solution, path, arguments):
 	file = open(f'{path}.log', 'a+')
 	file.writelines(f'{arguments.input} {graph.getsize()} {graph.getarcs()} {arguments.seed} {arguments.method} {len(solution)}\n')
 	file.close()
-
-	

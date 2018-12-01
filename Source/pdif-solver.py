@@ -7,15 +7,14 @@ import output
 import args
 
 # Retorna os nós fontes e os nós que são alcançado por ele
-def getsrcwithwe_achieved(graph):
+def getsrcwithwe_achieved(graph, transitivity):
 	size = graph.getsize() # Tamanho do dígrafo
 	wesrc = graph.wesrc() # Nós fontes
-	tra = graph.transitivity() # Transitividade do dígrafo
 
 	x = 0 # Posição do nó
 	for we in wesrc: # Percorre todos os nós fontes
 		for y in range(size): # Um for do tamanho do dígrafo
-			if tra[we['node']][y]: # Verifica se possui uma relação
+			if transitivity[we['node']][y]: # Verifica se possui uma relação
 				wesrc[x]['we_achieved'].append(y) # Coloca no conjunto de nós alcançado
 				wesrc[x]['we_achieved_len'] += 1
 		x += 1
@@ -25,8 +24,8 @@ def getsrcwithwe_achieved(graph):
 def unionlen(we1, we2):
 	return  len(list(set(we1 + we2)))
 
-def random_solution(graph, n_porce):
-	wesrc = getsrcwithwe_achieved(graph)
+def random_solution(graph, transitivity, n_porce):
+	wesrc = getsrcwithwe_achieved(graph, transitivity)
 	we_len = len(wesrc)
 
 	# listweSolution => Guarda todos os nós fontes que serão util
@@ -41,10 +40,10 @@ def random_solution(graph, n_porce):
 
 	return listweSolution
 
-def greedy_solution(graph, n_porce):
+def greedy_solution(graph, transitivity, n_porce):
 
 	# Lista de todos os nós fontes já ordenado em ordem decrescente
-	wesrc = sorted(getsrcwithwe_achieved(graph), key=lambda we: we['we_achieved_len'], reverse=True)
+	wesrc = sorted(getsrcwithwe_achieved(graph, transitivity), key=lambda we: we['we_achieved_len'], reverse=True)
 
 	# listweSolution => Guarda todos os nós que serão util
 	# listwe         => Lista de todos os nós que são atingido
@@ -80,16 +79,19 @@ def main():
 	# Número de nós que deverá ser atingido
 	n_porce = int((graph.getsize() * arguments.percentage) / 100)
 
+	# Transitividade do dígrafo
+	transitivity = graph.transitivity()
+
 	solutions = None
 	if arguments.method.lower() == 'g':
-		solutions = greedy_solution(graph, n_porce)
+		solutions = greedy_solution(graph, transitivity, n_porce)
 	elif arguments.method.lower() == 'a':
-		solutions = random_solution(graph, n_porce)
+		solutions = random_solution(graph, transitivity, n_porce)
 	else:
 		print("\nError: Método de solução inválida\n")
 
 	if solutions:
-		output.create_file_dot(graph, 'Dot/', arguments.input)
+		output.create_file_dot(graph, transitivity, 'Logs/', arguments.input)
 		output.create_file_log(graph, solutions, f'Logs/{arguments.output}', arguments)
 
 	print('\nSolução\nNós fontes que deveram ser utilizado: ')
