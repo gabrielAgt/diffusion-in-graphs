@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import random
-from graph import *
-import args
 import output
+import args
+from graph import *
 
 """
 	Elimina os elementos duplicados de um conjunto
@@ -59,8 +59,8 @@ def random_solution(graph, n_porce):
 	wesrc = getsrcwithwe_achieved(graph) 
 	we_len = len(wesrc)
 
-	# listweSolution => Guarda todos os nós fontes que serão util
-	# listwe         => Conjunto com todos os nós já atigindos
+	# listweSolution => Conjunto com todos os nós fontes que serão util
+	# listwe         => Conjunto de todos os nós já atigindos
 	listweSolution, listwe = [], []
 
 	# Enquanto a quantidade de nós não for atingida ele ira sortear outros nós fontes
@@ -84,8 +84,8 @@ def greedy_solution(graph, n_porce):
 	# Lista de todos os nós fontes já ordenado em ordem decrescente
 	wesrc = sorted(getsrcwithwe_achieved(graph), key=lambda we: we['we_achieved_len'], reverse=True)
 
-	# listweSolution => Guarda todos os nós que serão util
-	# listwe         => Lista de todos os nós que são atingido
+	# listweSolution => Conjunto com todos os nós que serão util
+	# listwe         => Conjunto de todos os nós que são atingido
 	listweSolution, listwe = [], []
 
 	# Nó com maior percentual de alcance
@@ -97,7 +97,7 @@ def greedy_solution(graph, n_porce):
 		return listweSolution
 	else:
 		for we in wesrc[1::]: # Percorre todo o conjunto de nós fontes pulando o primeiro indice
-		
+
 			# Tamanho da união do conjunto de nós atingido com os atigindos pelo nó src
 			# Caso a cardinalidade da união for menor ou igual a cardinalidade do conjunto solução
 			# então todos os nós atingidos são os mesmos
