@@ -26,7 +26,7 @@ class Graph():
 			raise e
 
 		content = file.readlines()
-		for line in content:
+		for line in content: # Percorrendo cada linha do arquivo
 			line = line.split(' ')
 
 			if line[0] == 'c': # Caso o primeiro caracter for igual a 'c' então é uma linha de comentário e não presiar se tratada
@@ -105,6 +105,9 @@ class Graph():
 	def getarcs(self):
 		return self.__edge
 
+	"""
+		Retorna uma copia do dígrafo
+	"""
 	def getGraph(self):
 		graph = self.__create()
 		for x in range(self.__size):
