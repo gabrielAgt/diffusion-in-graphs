@@ -56,20 +56,29 @@ def getsrcwithwe_achieved(graph):
 	n_porce => Quantidade de nós que devem ser atingido
 """
 def random_solution(graph, n_porce):
-	wesrc = getsrcwithwe_achieved(graph) 
-	we_len = len(wesrc)
+	wesrc = getsrcwithwe_achieved(graph) # Nós fontes
+	we_len = len(wesrc) # Quantidade de nós fontes
 
 	# listweSolution => Conjunto com todos os nós fontes que serão util
 	# listwe         => Conjunto de todos os nós já atigindos
 	listweSolution, listwe = [], []
 
+	v = 0 # Total de vezes que o loop rodou
 	# Enquanto a quantidade de nós não for atingida ele ira sortear outros nós fontes
 	while len(listwe) < n_porce:
+		# Verifica se já sorteou todos os nós fontes, 
+		# caso seja verdade e não tiver encontrado uma solução ele retorna nulo
+		if v >= we_len: 
+			return None
+
 		we = random.choice(wesrc) # Sortear outro no fonte
 		count = unionlen(listwe, we['we_achieved']) # Cardinalidade da união do conjunto de nós já atigindos
 		if count > len(listwe): # Verifica se os nós já foram atingido
 			listwe = remove_duplicate_elements(listwe + we['we_achieved'])
 			listweSolution.append(we)
+		wesrc.remove(we) # Remove da lista de nós fontes para não ser sorteado novamente
+		
+		v += 1
 
 	return listweSolution
 
@@ -92,6 +101,7 @@ def greedy_solution(graph, n_porce):
 	listwe = remove_duplicate_elements(listwe + wesrc[0]['we_achieved'])
 	listweSolution.append(wesrc[0])
 
+	count = 0
 	# Verificação para saber se ele já cobre a quantidade necessaria
 	if wesrc[0]['we_achieved_len'] >= n_porce:
 		return listweSolution
@@ -108,7 +118,10 @@ def greedy_solution(graph, n_porce):
 				if count >= n_porce: # Verifica se já alcançou a meta
 					break
 
-		return listweSolution
+		if count >= n_porce: # Caso tenha chegado na meta retorna os nós que serão utilizado
+			return listweSolution
+		else: # Caso contrario retorna nulo
+			return None
 
 def main():
 	# Obtendo os argumentos
@@ -136,10 +149,12 @@ def main():
 	if solutions:
 		output.resolve(graph, solutions, arguments)
 
-	print('\nMelhor Solução\nNós fontes que deveram ser utilizado: ')
-	for solution in solutions:
-		print(f'{solution["node"] + 1} ', end=' ')
-	print('\n')
+		print('Melhor Solução\nNós fontes que deveram ser utilizado: ')
+		for solution in solutions:
+			print(f'{solution["node"] + 1} ', end=' ')
+		print('\n')
+	else: # Mostra que não achou uma solução para a porcentagem encontrada
+		print('Não existe nós suficientes para cobrir esta porcentagem\n')
 
 if __name__ == '__main__':
 	main()
