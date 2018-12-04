@@ -6,7 +6,8 @@ def get():
 	parser.add_argument('seed', 
 		help='Valor inteiro de semente informada pelo usuário que será usada para inicializar o gerador de números aleatórios', type=int)
 	parser.add_argument('percentage', 
-		help='Percentual de nós que deseja atingir', type=int)
+		help='Valor correspondente à p-difusão alvo, ou seja, qual é o valor percentual p de nós que devem ser atingidos na rede para considerar a difusão bem sucedida', 
+		type=int)
 	parser.add_argument('method', 
 		help='Letra que indica qual método utilizar: \'g\' para algoritmo guloso, \'a\' para método aleatório')
 	parser.add_argument('input',

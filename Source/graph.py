@@ -68,20 +68,6 @@ class Graph():
 		return src
 
 	"""
-		Retorna uma matriz contendo a transitividade do dígrafo
-
-		O calculo da transitividade está sendo calculado com base no algoritmo de Warshall
-	"""
-	def transitivity(self):
-		tr = list(self.__graph)
-		for x in range(self.__size):
-			for y in range(self.__size):
-				for z in range(self.__size):
-					if tr[x][y] and tr[y][z]:
-						tr[x][z] = 1
-		return tr
-
-	"""
 		Adiciona mais um arco na relação
 	"""
 	def addedge(self, x, y):
