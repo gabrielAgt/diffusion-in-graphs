@@ -12,6 +12,8 @@ from graph import *
 def remove_duplicate_elements(_set):
 	return list(set(_set))
 
+def order_nodes(_set):
+	return sorted(_set, key=lambda we: we['we_achieved_len'], reverse=True)
 """
 	Retorna a cardinalidade do conjunto união conjunto de alcance do nó
 """
@@ -45,6 +47,9 @@ def getsrcwithwe_achieved(graph):
 			if transitivity[we['node']][y]: # Verifica se possui uma relação
 				wesrc[x]['we_achieved'].append(y) # Coloca no conjunto de nós alcançado
 				wesrc[x]['we_achieved_len'] += 1
+
+		wesrc[x]['we_achieved'].append(wesrc[x]['node']) # Coloca no conjunto de nós alcançado
+		wesrc[x]['we_achieved_len'] += 1
 		x += 1
 
 	return wesrc
@@ -60,27 +65,27 @@ def random_solution(graph, n_porce):
 	we_len = len(wesrc) # Quantidade de nós fontes
 
 	# listweSolution => Conjunto com todos os nós fontes que serão util
-	# listwe         => Conjunto de todos os nós já atigindos
-	listweSolution, listwe = [], []
+	# nodesetachieved         => Conjunto de todos os nós já atigindos
+	listweSolution, nodesetachieved = [], []
 
 	v = 0 # Total de vezes que o loop rodou
 	# Enquanto a quantidade de nós não for atingida ele ira sortear outros nós fontes
-	while len(listwe) < n_porce:
+	while len(nodesetachieved) < n_porce:
 		# Verifica se já sorteou todos os nós fontes, 
 		# caso seja verdade e não tiver encontrado uma solução ele retorna nulo
 		if v >= we_len: 
 			return None
 
 		we = random.choice(wesrc) # Sortear outro no fonte
-		count = unionlen(listwe, we['we_achieved']) # Cardinalidade da união do conjunto de nós já atigindos
-		if count > len(listwe): # Verifica se os nós já foram atingido
-			listwe = remove_duplicate_elements(listwe + we['we_achieved'])
+		count = unionlen(nodesetachieved, we['we_achieved']) # Cardinalidade da união do conjunto de nós já atigindos
+		if count > len(nodesetachieved): # Verifica se os nós já foram atingido
+			nodesetachieved = remove_duplicate_elements(nodesetachieved + we['we_achieved'])
 			listweSolution.append(we)
 		wesrc.remove(we) # Remove da lista de nós fontes para não ser sorteado novamente
 		
 		v += 1
 
-	return listweSolution
+	return listweSolution, nodesetachieved
 
 """
 	Algoritmo guloso
@@ -91,35 +96,35 @@ def random_solution(graph, n_porce):
 def greedy_solution(graph, n_porce):
 
 	# Lista de todos os nós fontes já ordenado em ordem decrescente
-	wesrc = sorted(getsrcwithwe_achieved(graph), key=lambda we: we['we_achieved_len'], reverse=True)
+	wesrc = order_nodes(getsrcwithwe_achieved(graph))
 
-	# listweSolution => Conjunto com todos os nós que serão util
-	# listwe         => Conjunto de todos os nós que são atingido
-	listweSolution, listwe = [], []
+	# listweSolution  => Conjunto com todos os nós que serão util
+	# nodesetachieved => Conjunto de todos os nós que são atingido
+	listweSolution, nodesetachieved = [], []
 
 	# Nó com maior percentual de alcance
-	listwe = remove_duplicate_elements(listwe + wesrc[0]['we_achieved'])
+	nodesetachieved = remove_duplicate_elements(nodesetachieved + wesrc[0]['we_achieved'])
 	listweSolution.append(wesrc[0])
 
 	count = 0
 	# Verificação para saber se ele já cobre a quantidade necessaria
 	if wesrc[0]['we_achieved_len'] >= n_porce:
-		return listweSolution
+		return listweSolution, nodesetachieved
 	else:
 		for we in wesrc[1::]: # Percorre todo o conjunto de nós fontes pulando o primeiro indice
 
 			# Tamanho da união do conjunto de nós atingido com os atigindos pelo nó src
 			# Caso a cardinalidade da união for menor ou igual a cardinalidade do conjunto solução
 			# então todos os nós atingidos são os mesmos
-			count = unionlen(listwe, we['we_achieved'])
-			if count > len(listwe): # Verifica se os nós já foram atingido
-				listwe = remove_duplicate_elements(listwe + we['we_achieved']) # Elimina os elementos duplicado
+			count = unionlen(nodesetachieved, we['we_achieved'])
+			if count > len(nodesetachieved): # Verifica se os nós já foram atingido
+				nodesetachieved = remove_duplicate_elements(nodesetachieved + we['we_achieved']) # Elimina os elementos duplicado
 				listweSolution.append(we)
 				if count >= n_porce: # Verifica se já alcançou a meta
 					break
 
 		if count >= n_porce: # Caso tenha chegado na meta retorna os nós que serão utilizado
-			return listweSolution
+			return listweSolution, nodesetachieved
 		else: # Caso contrario retorna nulo
 			return None
 
@@ -137,17 +142,17 @@ def main():
 	# Número de nós que deverá ser atingido
 	n_porce = int((graph.getsize() * arguments.percentage) / 100)
 
-	solutions = None
+	solutions, nodesetachieved = None, []
 	if arguments.method.lower() == 'g':
-		solutions = greedy_solution(graph, n_porce)
+		solutions, nodesetachieved = greedy_solution(graph, n_porce)
 	elif arguments.method.lower() == 'a':
-		solutions = random_solution(graph, n_porce)
+		solutions, nodesetachieved = random_solution(graph, n_porce)
 	else:
 		print("\nError: Método de solução inválida\n")
 
 	# Caso tenha encontrado alguma solução então ele gera os arquivos de logs
 	if solutions:
-		output.resolve(graph, solutions, arguments)
+		output.resolve(graph, solutions, nodesetachieved, arguments)
 
 		print('Melhor Solução\nNós fontes que deveram ser utilizado: ')
 		for solution in solutions:
