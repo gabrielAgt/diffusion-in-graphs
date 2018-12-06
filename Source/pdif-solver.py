@@ -12,8 +12,12 @@ from graph import *
 def remove_duplicate_elements(_set):
 	return list(set(_set))
 
+"""
+	Ordenação do conjunto em ordem decrescente
+"""
 def order_nodes(_set):
 	return sorted(_set, key=lambda we: we['we_achieved_len'], reverse=True)
+	
 """
 	Retorna a cardinalidade do conjunto união conjunto de alcance do nó
 """
@@ -141,7 +145,7 @@ def main():
 
 	# Número de nós que deverá ser atingido
 	n_porce = int((graph.getsize() * arguments.percentage) / 100)
-
+	
 	solutions, nodesetachieved = None, []
 	if arguments.method.lower() == 'g':
 		solutions, nodesetachieved = greedy_solution(graph, n_porce)

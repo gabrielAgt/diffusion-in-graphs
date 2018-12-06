@@ -19,6 +19,8 @@ def create_file_dot(graph, solutions, nodesetachieved, arguments):
 			header += ' [fillcolor=yellow, style=filled]'
 		elif x in nodesetachieved:
 			header += ' [color=red]'
+		else:
+			header += ' [color=black]'
 		header += ';\n'
 
 		# Gera os relacionamentos
