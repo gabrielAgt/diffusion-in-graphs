@@ -62,7 +62,7 @@ class Graph():
 				col += self.__graph[i][x]
 				lin += self.__graph[x][i]
 
-			if col == 0 and lin > 0:
+			if col == 0:
 				src.append({ 'node': x, 'degree': lin, 'we_achieved': [], 'we_achieved_len': 0 })
 
 		return src

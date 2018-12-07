@@ -78,7 +78,7 @@ def random_solution(graph, n_porce):
 		# Verifica se já sorteou todos os nós fontes, 
 		# caso seja verdade e não tiver encontrado uma solução ele retorna nulo
 		if v >= we_len: 
-			return None
+			return None, None
 
 		we = random.choice(wesrc) # Sortear outro no fonte
 		count = unionlen(nodesetachieved, we['we_achieved']) # Cardinalidade da união do conjunto de nós já atigindos
@@ -130,7 +130,7 @@ def greedy_solution(graph, n_porce):
 		if count >= n_porce: # Caso tenha chegado na meta retorna os nós que serão utilizado
 			return listweSolution, nodesetachieved
 		else: # Caso contrario retorna nulo
-			return None
+			return None, None
 
 def main():
 	# Obtendo os argumentos
@@ -155,7 +155,7 @@ def main():
 		print("\nError: Método de solução inválida\n")
 
 	# Caso tenha encontrado alguma solução então ele gera os arquivos de logs
-	if solutions:
+	if solutions and nodesetachieved:
 		output.resolve(graph, solutions, nodesetachieved, arguments)
 
 		print('Melhor Solução\nNós fontes que deveram ser utilizado: ')
