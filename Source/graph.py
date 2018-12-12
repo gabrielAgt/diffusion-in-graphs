@@ -29,7 +29,7 @@ class Graph():
 		for line in content: # Percorrendo cada linha do arquivo
 			line = line.split(' ')
 
-			if line[0] == 'c': # Caso o primeiro caracter for igual a 'c' então é uma linha de comentário e não presiar se tratada
+			if line[0] == 'c': # Caso o primeiro caracter for igual a 'c' então é uma linha de comentário e não precisa ser tratada
 				continue
 			elif line[0] == 'p': # Linha que indica o tamanho do dígrafo é o número de relacionamentos
 				self.__size = int(line[2])
