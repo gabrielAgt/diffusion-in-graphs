@@ -11,7 +11,7 @@ $ git clone https://github.com/gabrielAgt/diffusion-in-graphs.git
 
 ### Como usar
 
-```sh
+```
 python pdif-solver.py --help
 
 usage: pdif-solver.py [-h] <seed> <percentage> <method> <input> <output>
