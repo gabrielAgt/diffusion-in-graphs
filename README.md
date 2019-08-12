@@ -1,5 +1,5 @@
 
-# Problema da Mínima Difusão Parcial em Grafos Direcionados (PMDPGD)
+## Problema da Mínima Difusão Parcial em Grafos Direcionados (PMDPGD)
 
 > O trabalho consiste em solucionar um problema proposto em sala de aula (disciplina matemática discreta), para a mínima difusão em grafos, que consiste em achar uma quantidade mínima de nós para cobrir uma certa porcentagem de algum grafo.
 
