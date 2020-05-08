@@ -65,8 +65,8 @@ instancia | quantidade de arcos | semente | método | tamanho do conjunto soluç
 #### Dot
 • Os nós que foram selecionados para compor o conjunto solução deverão estar destacados em amarelo;  
 • Os arcos e os nós que serão atingidos pelo conjunto solução deverão estar destacados em vermelho;  
-• Os demais arcos, não alcançáveis, deverão estar em cor preta.
+• Os demais arcos, não alcançáveis deverão estar em cor preta.
 
-## License
+## Licença
 
-Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE.md](LICENSE.md) para detalhes
+Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes
