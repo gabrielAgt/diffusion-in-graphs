@@ -1,4 +1,4 @@
-class Graph():
+class Graph(object):
     def __init__(self):
         # Dígrafo no formato de matriz binária
         self.__graph = None
@@ -39,7 +39,6 @@ class Graph():
         """
         Retorna todos os nós fontes do dígrafo, sendo aqueles nós que se relaciona com outros,
         mas nenhum se relaciona com ele.
-
         Conjunto de retorno:
                         Ex: [{
                                         'node': <número do nó>,
