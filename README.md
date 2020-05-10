@@ -35,7 +35,8 @@ argumentos opcionais:
 
 ### Entrada
 
-Os grafos de entrada devem ser no formato ASCII DIMACS. Onde 'c' indica que é uma linha de comentário, 'e' indica os relacionamento de uma nó para o outro e 'p edge' o tamanho do grafo e quantidade de relacionamentos 
+Os grafos de entrada devem ser no formato ASCII DIMACS. Onde 'c' indica que é uma linha de comentário, 'e' indica os relacionamento de um nó para o outro e 'p edge' o tamanho do grafo e quantidade de relacionamentos.
+
 Exemplo:
 
 ```
